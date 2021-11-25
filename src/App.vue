@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <main class="main">
+    <main class="main bg-gray-50">
       <TheHeader />
       <AppRate />
       <AppChart />
