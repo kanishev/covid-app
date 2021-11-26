@@ -2,8 +2,8 @@
   <div class="relative">
     <input
       type="text"
-      class="bg-purple-white shadow rounded border-0 p-3"
-      placeholder="Поиск по странам:"
+      class="bg-purple-white shadow-inner rounded border-0 p-3"
+      placeholder="Поиск по странам..."
       v-model="value"
       @input="(e) => (value = e.target.value)"
       @keydown.enter="selectCountry"

@@ -13,8 +13,8 @@
     >
       <div class="logo flex">
         <img class="w-16 h-auto" src="../assets/covid.png" alt="covid" />
-        <div class="m-auto pl-2">
-          <h1 class="text-xl font-normal">Covid-19 Статистика</h1>
+        <div class="m-auto pl-4">
+          <h1 class="text-2xl font-medium">Covid-19 Статистика</h1>
           <p>
             По состоянию на:
             <span class="date text-base font-medium">{{
