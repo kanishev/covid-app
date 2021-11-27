@@ -13,7 +13,7 @@
 <script>
 import TheHeader from "./components/TheHeader.vue";
 import TheFooter from "./components/TheFooter.vue";
-import AppChart from "./components/AppChart.vue";
+import AppChart from "./components/Charts/AppChart.vue";
 import AppTable from "./components/AppTable.vue";
 import AppRate from "./components/AppRate.vue";
 
