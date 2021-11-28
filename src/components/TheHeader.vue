@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <AppSearch />
+      <AppSearch :countries="countries" />
     </header>
   </div>
 </template>
@@ -33,6 +33,11 @@
 import AppSearch from "./AppSearch.vue";
 export default {
   components: { AppSearch },
+  computed: {
+    countries() {
+      return this.$store.state.countries;
+    },
+  },
 };
 </script>
 

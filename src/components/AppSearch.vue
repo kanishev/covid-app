@@ -3,7 +3,11 @@
     <input
       type="text"
       class="bg-purple-white shadow-inner rounded border-0 p-3"
-      placeholder="Поиск по странам..."
+      :placeholder="
+        this.selectedCountry
+          ? selectedCountry.country.common
+          : 'Поиск по странам...'
+      "
       v-model="value"
       @input="(e) => (value = e.target.value)"
       @keydown.enter="selectCountry"
@@ -13,7 +17,7 @@
     >
       <search-icon></search-icon>
     </div>
-    <div class="search-list relative" v-if="value.length > 3">
+    <div class="search-list relative" v-if="isListVisible">
       <ul
         class="
           absolute
@@ -26,19 +30,14 @@
           max-h-64
         "
       >
-        <li class="p-2">hello</li>
-        <li class="p-2">hello</li>
-        <li class="p-2">hello</li>
-        <li class="p-2">hello</li>
-        <li class="p-2">hello</li>
-        <li class="p-2">hello</li>
-        <!-- <li
-            v-for="(item, index) in matches"
-            :key="index"
-            :class="{ selected: selected == index }"
-            @click="itemClicked(index)"
-            v-text="item.country"
-          ></li> -->
+        <li
+          v-for="{ country } in countryList"
+          :key="country.common"
+          class="p-2 cursor-pointer"
+          @click="selectCountry(country.common)"
+        >
+          {{ country.common }}
+        </li>
       </ul>
     </div>
   </div>
@@ -47,19 +46,48 @@
 <script>
 import SearchIcon from "../assets/icons/search.svg";
 export default {
+  props: ["countries"],
   data() {
     return {
       value: "",
+      isListVisible: false,
+      selectedCountry: null,
     };
   },
   computed: {
-    country() {
-      return true;
+    countryList() {
+      if (this.value == "" || this.countries.length == 0) {
+        return [];
+      }
+
+      let list = this.countries.filter(({ country }) => {
+        return country.common.toLowerCase().includes(this.value.toLowerCase());
+      });
+
+      console.log(list);
+      return list;
     },
   },
   methods: {
     selectCountry() {
-      console.log("1");
+      let country = this.countryList.find((c) =>
+        c.country.common.toLowerCase().includes(this.value.toLowerCase())
+      );
+
+      if (country) {
+        this.selectedCountry = country;
+        this.$store.commit("setSelectedCountry", this.selectedCountry);
+        this.value = "";
+      }
+    },
+  },
+  watch: {
+    value() {
+      if (this.value.length) {
+        this.isListVisible = true;
+      } else {
+        this.isListVisible = false;
+      }
     },
   },
   components: { SearchIcon },
