@@ -21,8 +21,7 @@ export default {
   name: "App",
   components: { TheHeader, TheFooter, AppChart, AppTable, AppRate },
   created() {
-    console.log("1");
-    this.$store.dispatch("fetchCountries");
+    this.$store.dispatch("fetchGlobalData");
   },
 };
 </script>

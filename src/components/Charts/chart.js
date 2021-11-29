@@ -6,12 +6,21 @@ export default {
   mixins: [reactiveProp],
   data() {
     return {
-      options: { responsive: true, maintainAspectRatio: false },
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: {
+        duration: 0,
+      },
+      hover: {
+        animationDuration: 0,
+      },
+      responsiveAnimationDuration: 0,
     };
   },
   mounted() {
     // this.chartData is created in the mixin.
     // If you want to pass options please create a local options object
+    console.log(this.chartData);
     this.renderChart(this.chartData, this.options);
   },
 };

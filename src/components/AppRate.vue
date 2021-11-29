@@ -1,6 +1,62 @@
 <template>
-  <div class="container mx-auto my-12">
+  <div class="container mx-auto my-12" v-if="!selectedCountry">
     <div class="rate-list flex space-x-5 justify-between">
+      <div
+        class="
+          group
+          card-1
+          flex-1
+          shadow
+          bg-white
+          rounded
+          text-center
+          p-4
+          m-auto
+          hover:bg-indigo-300
+        "
+      >
+        <Loader v-if="!globalRate" />
+
+        <div v-else>
+          <span
+            class="
+              label
+              uppercase
+              text-gray-500
+              font-semibold
+              text-base
+              group-hover:text-white
+            "
+            >Все случаи</span
+          >
+          <div
+            class="
+              value
+              text-indigo-400
+              font-black
+              text-4xl
+              py-2
+              group-hover:text-gray-900
+            "
+          >
+            {{ formatNumber(this.globalRate.TotalConfirmed) }}
+          </div>
+          <div
+            class="
+              value-2
+              text-indigo-400
+              font-semibold
+              text-xl
+              group-hover:text-gray-900
+            "
+            v-if="this.globalRate.NewConfirmed > 0"
+          >
+            <span>+</span>
+            {{ formatNumber(this.globalRate.NewConfirmed) }}
+          </div>
+        </div>
+      </div>
+
       <div
         class="
           card-1
@@ -10,40 +66,44 @@
           rounded
           text-center
           p-4
-          hover:border-red-500
+          hover:bg-red-700
         "
       >
-        <span class="label uppercase text-gray-500 font-semibold text-base"
-          >Все случаи</span
-        >
-        <div class="value text-indigo-400 font-black text-4xl py-2">100000</div>
-        <div class="value-2 text-indigo-400 font-semibold text-xl">
-          <span>+</span>
-          23
+        <Loader v-if="!globalRate" />
+        <div v-else>
+          <span class="label uppercase text-gray-500 font-semibold text-base"
+            >Летальные исходы</span
+          >
+          <div class="value text-red-500 font-black text-4xl py-2">
+            {{ formatNumber(this.globalRate.TotalDeaths) }}
+          </div>
+          <div
+            class="value-2 text-red-500 font-semibold text-xl"
+            v-if="this.globalRate.NewDeaths > 0"
+          >
+            <span>+</span>
+            {{ formatNumber(this.globalRate.NewDeaths) }}
+          </div>
         </div>
       </div>
 
       <div class="card-1 flex-1 shadow bg-white rounded text-center p-4">
-        <span class="label uppercase text-gray-500 font-semibold text-base"
-          >Все случаи</span
-        >
-        <div class="value text-red-500 font-black text-5xl py-2">102030000</div>
-        <div class="value-2 text-red-500 font-semibold text-xl">
-          <span>+</span>
-          23
-        </div>
-      </div>
+        <Loader v-if="!globalRate" />
 
-      <div class="card-1 flex-1 shadow bg-white rounded text-center p-4">
-        <span class="label uppercase text-gray-500 font-semibold text-base"
-          >Все случаи</span
-        >
-        <div class="value text-green-500 font-black text-5xl py-2">
-          10121312
-        </div>
-        <div class="value-2 text-green-500 font-semibold text-xl">
-          <span>+</span>
-          400
+        <div v-else>
+          <span class="label uppercase text-gray-500 font-semibold text-base"
+            >Восстановлено</span
+          >
+          <div class="value text-green-500 font-black text-5xl py-2">
+            {{ formatNumber(this.globalRate.TotalRecovered) }}
+          </div>
+          <div
+            class="value-2 text-green-500 font-semibold text-xl"
+            v-if="this.globalRate.newRecovered > 0"
+          >
+            <span>+</span>
+            {{ formatNumber(this.globalRate.newRecovered) }}
+          </div>
         </div>
       </div>
     </div>
@@ -51,7 +111,28 @@
 </template>
 
 <script>
-export default {};
+import Loader from "./AppLoader.vue";
+export default {
+  data() {
+    return {};
+  },
+  computed: {
+    selectedCountry() {
+      return this.$store.state.selectedCountry;
+    },
+    globalRate() {
+      return this.$store.state.globalRate;
+    },
+  },
+  methods: {
+    formatNumber(value) {
+      return new Intl.NumberFormat({
+        maximumSignificantDigits: 3,
+      }).format(value);
+    },
+  },
+  components: { Loader },
+};
 </script>
 
 <style></style>

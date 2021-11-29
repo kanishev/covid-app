@@ -54,27 +54,34 @@
             </tr>
           </thead>
           <tbody class="border-t border-fuchsia-600">
-            <tr v-for="(item, index) in 20" :key="index" class="divide-x">
-              <td class="border p-4 w-7">
-                <!-- <img
-                  :src="`${publicPath}flags/${item.CountryCode}.png`"
+            <tr
+              v-for="(item, index) in countries"
+              :key="index"
+              class="divide-x"
+            >
+              <td class="border p-4 flex items-center">
+                <img
+                  :src="`https://flagcdn.com/48x36/${item.CountryCode.toLowerCase()}.png`"
                   width="22"
+                  class="mr-3"
                 />
-                {{ item.Country }} -->11
+                <p>{{ item.Country }}</p>
               </td>
-              <td class="border p-4">ss</td>
               <td class="border p-4">
-                <!-- {{
-                  item.NewConfirmed > 0 ? numberFormat(item.NewConfirmed) : ""
-                }} -->
-                22
+                {{ formatNumber(item.TotalConfirmed) }}
               </td>
-              <td class="border p-4">ss</td>
               <td class="border p-4">
-                <!-- {{ item.NewDeaths > 0 ? numberFormat(item.NewDeaths) : "" }} -->
-                33
+                {{ formatNumber(item.NewConfirmed) }}
               </td>
-              <td class="border p-4">ss</td>
+              <td class="border p-4">
+                {{ formatNumber(item.TotalDeaths) }}
+              </td>
+              <td class="border p-4">
+                {{ formatNumber(item.NewDeaths) }}
+              </td>
+              <td class="border p-4">
+                {{ formatNumber(item.TotalRecovered) }}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -89,6 +96,28 @@ export default {
     return {
       country: "",
     };
+  },
+  computed: {
+    countries() {
+      const countries = this.$store.state.countriesSummary;
+
+      if (this.country == "") {
+        return countries;
+      }
+      return countries.filter((c) => {
+        return c.Country.toLowerCase().match(this.country.toLowerCase());
+      });
+    },
+    filteredCountries() {
+      return this.countries;
+    },
+  },
+  methods: {
+    formatNumber(value) {
+      return new Intl.NumberFormat({
+        maximumSignificantDigits: 3,
+      }).format(value);
+    },
   },
 };
 </script>

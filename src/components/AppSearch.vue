@@ -4,9 +4,7 @@
       type="text"
       class="bg-purple-white shadow-inner rounded border-0 p-3"
       :placeholder="
-        this.selectedCountry
-          ? selectedCountry.country.common
-          : 'Поиск по странам...'
+        this.selectedCountry ? selectedCountry.Country : 'Поиск по странам...'
       "
       v-model="value"
       @input="(e) => (value = e.target.value)"
@@ -30,13 +28,16 @@
           max-h-64
         "
       >
+        <li class="p-2 cursor-pointer" v-if="this.countryList.length == 0">
+          Страна не найдена
+        </li>
         <li
-          v-for="{ country } in countryList"
-          :key="country.common"
+          v-for="country in countryList"
+          :key="country.Country"
           class="p-2 cursor-pointer"
-          @click="selectCountry(country.common)"
+          @click="selectCountry(country.Country)"
         >
-          {{ country.common }}
+          {{ country.Country }}
         </li>
       </ul>
     </div>
@@ -59,24 +60,23 @@ export default {
       if (this.value == "" || this.countries.length == 0) {
         return [];
       }
-
-      let list = this.countries.filter(({ country }) => {
-        return country.common.toLowerCase().includes(this.value.toLowerCase());
+      let list = this.countries.filter((country) => {
+        return country.Country.toLowerCase().includes(this.value.toLowerCase());
       });
 
-      console.log(list);
       return list;
     },
   },
   methods: {
     selectCountry() {
-      let country = this.countryList.find((c) =>
-        c.country.common.toLowerCase().includes(this.value.toLowerCase())
-      );
+      let country = this.countryList.find((c) => {
+        return c.Country.toLowerCase().includes(this.value.toLowerCase());
+      });
 
       if (country) {
         this.selectedCountry = country;
         this.$store.commit("setSelectedCountry", this.selectedCountry);
+        this.$store.dispatch("fetchCountryData");
         this.value = "";
       }
     },
