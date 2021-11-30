@@ -1,6 +1,7 @@
 <template>
-  <div class="container mx-auto my-10" v-if="selectedCountry">
-    <line-chart :chart-data="linedata"></line-chart>
+  <div class="container mx-auto my-10" v-if="this.selectedCountry">
+    <line-chart :chartData="datacollection"></line-chart>
+    <button @click="fillData()">Randomize</button>
   </div>
 </template>
 
@@ -10,18 +11,29 @@ import LineChart from "./chart";
 export default {
   data() {
     return {
-      linedata: {
-        // labels: [
-        //   "January",
-        //   "February",
-        //   "March",
-        //   "April",
-        //   "May",
-        //   "June",
-        //   "July",
-        // ],
-        datasets: [],
-      },
+      // linedata: {
+      //   labels: [
+      //     "January",
+      //     "February",
+      //     "March",
+      //     "April",
+      //     "May",
+      //     "June",
+      //     "July",
+      //   ],
+      //   datasets: [
+      //     // {
+      //     //   borderColor: "#05CBE1",
+      //     //   pointBackgroundColor: "white",
+      //     //   pointBorderColor: "white",
+      //     //   borderWidth: 1,
+      //     //   backgroundColor: "transparent",
+      //     //   data: [0],
+      //     // },
+      //   ],
+      // },
+
+      datacollection: null,
     };
   },
   computed: {
@@ -34,15 +46,25 @@ export default {
   },
 
   methods: {
+    fillData() {
+      this.datacollection = {
+        datasets: [
+          {
+            label: "Data One",
+            backgroundColor: "#f87979",
+            data: [],
+          },
+        ],
+      };
+
+      for (let i = 0; i < 1000; i++) {
+        this.datacollection.datasets[0].data.push(this.countryRate.deaths[i]);
+      }
+    },
+
     setData() {
       // const deaths = {
-      //   label: "Летальные исходы",
-      //   borderColor: "#05CBE1",
-      //   pointBackgroundColor: "white",
-      //   pointBorderColor: "white",
-      //   borderWidth: 1,
-      //   backgroundColor: "transparent",
-      //   data: [1, 2, 3, 4],
+      //
       // };
       const confirmed = {
         label: "Выявлено",
@@ -51,7 +73,7 @@ export default {
         pointBorderColor: "white",
         borderWidth: 1,
         backgroundColor: "transparent",
-        data: this.countryRate.confirmed,
+        data: [1, 2, 30, 20, 50],
       };
       // this.linedata.datasets = [...this.linedata.datasets, deaths];
       this.linedata.datasets.push(confirmed);
@@ -60,7 +82,7 @@ export default {
   },
   watch: {
     countryRate() {
-      this.setData();
+      this.fillData();
     },
   },
   components: {

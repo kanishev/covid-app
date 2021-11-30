@@ -32,8 +32,10 @@ export default new Vuex.Store({
       };
 
       data.forEach((d) => {
-        rate.confirmed.push(d.Confirmed);
-        rate.deaths.push(d.Deaths);
+        if (d.Confirmed > 0 && d.Deaths > 0) {
+          rate.confirmed.push(d.Confirmed);
+          rate.deaths.push(d.Deaths);
+        }
       });
 
       state.countryRate = rate;
