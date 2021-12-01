@@ -1,7 +1,8 @@
 <template>
   <div class="container mx-auto my-10" v-if="this.selectedCountry">
-    <line-chart :chartData="datacollection"></line-chart>
-    <button @click="fillData()">Randomize</button>
+    <line-chart :chartData="linedata[0]"></line-chart>
+    <line-chart :chartData="linedata[1]"></line-chart>
+    <line-chart :chartData="linedata[2]"></line-chart>
   </div>
 </template>
 
@@ -11,29 +12,20 @@ import LineChart from "./chart";
 export default {
   data() {
     return {
-      // linedata: {
-      //   labels: [
-      //     "January",
-      //     "February",
-      //     "March",
-      //     "April",
-      //     "May",
-      //     "June",
-      //     "July",
-      //   ],
-      //   datasets: [
-      //     // {
-      //     //   borderColor: "#05CBE1",
-      //     //   pointBackgroundColor: "white",
-      //     //   pointBorderColor: "white",
-      //     //   borderWidth: 1,
-      //     //   backgroundColor: "transparent",
-      //     //   data: [0],
-      //     // },
-      //   ],
-      // },
-
-      datacollection: null,
+      linedata: [
+        {
+          datasets: [
+            {
+              borderColor: "#05CBE1",
+              pointBackgroundColor: "white",
+              pointBorderColor: "white",
+              borderWidth: 1,
+              backgroundColor: "transparent",
+              data: [0, 0, 0, 0, 0],
+            },
+          ],
+        },
+      ],
     };
   },
   computed: {
@@ -44,45 +36,55 @@ export default {
       return this.$store.state.countryRate;
     },
   },
-
   methods: {
-    fillData() {
-      this.datacollection = {
-        datasets: [
-          {
-            label: "Data One",
-            backgroundColor: "#f87979",
-            data: [],
-          },
-        ],
-      };
-
-      for (let i = 0; i < 1000; i++) {
-        this.datacollection.datasets[0].data.push(this.countryRate.deaths[i]);
-      }
-    },
-
     setData() {
-      // const deaths = {
-      //
-      // };
+      const deaths = {
+        label: "Летальные исходы",
+        borderColor: "red",
+        pointBackgroundColor: "white",
+        pointBorderColor: "white",
+        borderWidth: 2,
+        backgroundColor: "transparent",
+        data: this.countryRate.deaths,
+      };
       const confirmed = {
         label: "Выявлено",
         borderColor: "#05CBE1",
         pointBackgroundColor: "white",
         pointBorderColor: "white",
-        borderWidth: 1,
+        borderWidth: 2,
         backgroundColor: "transparent",
-        data: [1, 2, 30, 20, 50],
+        data: this.countryRate.confirmed,
       };
-      // this.linedata.datasets = [...this.linedata.datasets, deaths];
-      this.linedata.datasets.push(confirmed);
-      // this.linedata.datasets[0].data.push(111);
+      const recovered = {
+        label: "Вылечилось",
+        borderColor: "green",
+        pointBackgroundColor: "white",
+        pointBorderColor: "white",
+        borderWidth: 2,
+        backgroundColor: "transparent",
+        data: this.countryRate.recovered,
+      };
+
+      this.linedata = [
+        {
+          labels: [...this.countryRate.dates],
+          datasets: [deaths],
+        },
+        {
+          labels: [...this.countryRate.dates],
+          datasets: [confirmed],
+        },
+        {
+          labels: [...this.countryRate.dates],
+          datasets: [recovered],
+        },
+      ];
     },
   },
   watch: {
     countryRate() {
-      this.fillData();
+      this.setData();
     },
   },
   components: {

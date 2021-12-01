@@ -26,15 +26,20 @@ export default new Vuex.Store({
       state.countriesSummary = countries;
     },
     setCountryData(state, data) {
+      console.log(data);
       const rate = {
         confirmed: [],
         deaths: [],
+        dates: [],
+        recovered: [],
       };
 
       data.forEach((d) => {
         if (d.Confirmed > 0 && d.Deaths > 0) {
           rate.confirmed.push(d.Confirmed);
           rate.deaths.push(d.Deaths);
+          rate.recovered.push(d.Recovered);
+          rate.dates.push(d.Date);
         }
       });
 
@@ -63,12 +68,13 @@ export default new Vuex.Store({
       country = country.split(" ").join("-");
 
       const { data } = await axios.get(
-        `https://api.covid19api.com/total/dayone/country/${country}`
+        `https://api.covid19api.com/country/${country}?from=2021-01-01T00:00:00Z&to=2021-01-11T00:00:00Z`
       );
 
+      console.log(data);
       const result = data.map((i) => {
-        const { Deaths, Confirmed } = i;
-        return { Deaths, Confirmed };
+        const { Deaths, Confirmed, Date, Recovered } = i;
+        return { Deaths, Confirmed, Date, Recovered };
       });
 
       commit("setCountryData", result);
