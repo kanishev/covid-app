@@ -14,7 +14,7 @@
         xsm:text-justify xsm:justify-between
       "
     >
-      <div class="logo flex items-center">
+      <div class="logo flex items-center flex-col xsm:flex-row">
         <img
           v-if="!this.selectedCountry"
           class="w-16 xsm:block hidden"

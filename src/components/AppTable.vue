@@ -3,14 +3,25 @@
     <div class="bg-white shadow rounded">
       <div
         class="
-          flex
-          justify-between
+          flex flex-wrap
           p-3
           items-center
           border-b-2 border-fuchsia-600
+          justify-center
+          xsm:justify-between
         "
       >
-        <h2 class="font-medium tracking-wider pl-2 text-gray-600 uppercase">
+        <h2
+          class="
+            font-medium
+            tracking-wider
+            pl-2
+            text-gray-600
+            uppercase
+            mb-2
+            xsm:mb-0
+          "
+        >
           Страны мира
         </h2>
         <input

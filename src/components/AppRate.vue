@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto my-12" v-if="!selectedCountry">
-    <div class="rate-list flex flex-wrap space-x-5 justify-between">
+    <div class="rate-list flex flex-wrap sm:space-x-5 justify-between">
       <div
         class="
           group
@@ -60,8 +60,8 @@
 
       <div
         class="
-          card-1
           flex-1
+          card-1
           shadow
           bg-white
           rounded
