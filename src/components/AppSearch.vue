@@ -15,7 +15,7 @@
     >
       <search-icon></search-icon>
     </div>
-    <div class="search-list relative" v-if="isListVisible">
+    <div class="relative" v-if="isListVisible">
       <ul
         class="
           absolute

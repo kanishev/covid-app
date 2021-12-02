@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto my-12" v-if="!selectedCountry">
-    <div class="rate-list flex flex-wrap sm:space-x-5 justify-between">
+    <div class="flex flex-wrap justify-between sm:space-x-5">
       <div
         class="
           group
@@ -11,9 +11,9 @@
           rounded
           text-center
           p-4
+          mb-3
           m-auto
           hover:bg-indigo-300
-          mb-3
         "
       >
         <Loader v-if="!globalRate" />
@@ -32,7 +32,6 @@
           >
           <div
             class="
-              value
               text-indigo-400
               font-black
               text-4xl
@@ -43,13 +42,7 @@
             {{ formatNumber(this.globalRate.TotalConfirmed) }}
           </div>
           <div
-            class="
-              value-2
-              text-indigo-400
-              font-semibold
-              text-xl
-              group-hover:text-white
-            "
+            class="text-indigo-400 font-semibold text-xl group-hover:text-white"
             v-if="this.globalRate.NewConfirmed > 0"
           >
             <span>+</span>
@@ -60,6 +53,7 @@
 
       <div
         class="
+          group
           flex-1
           card-1
           shadow
@@ -67,9 +61,8 @@
           rounded
           text-center
           p-4
-          group
-          hover:bg-red-400
           mb-3
+          hover:bg-red-400
         "
       >
         <Loader v-if="!globalRate" />
@@ -86,25 +79,12 @@
             >Летальные исходы</span
           >
           <div
-            class="
-              value
-              text-red-500
-              font-black
-              text-4xl
-              py-2
-              group-hover:text-white
-            "
+            class="text-red-500 font-black text-4xl py-2 group-hover:text-white"
           >
             {{ formatNumber(this.globalRate.TotalDeaths) }}
           </div>
           <div
-            class="
-              value-2
-              text-red-500
-              font-semibold
-              text-xl
-              group-hover:text-white
-            "
+            class="text-red-500 font-semibold text-xl group-hover:text-white"
             v-if="this.globalRate.NewDeaths > 0"
           >
             <span>+</span>
@@ -115,6 +95,7 @@
 
       <div
         class="
+          group
           card-1
           flex-1
           shadow
@@ -122,7 +103,6 @@
           rounded
           text-center
           p-4
-          group
           hover:bg-green-400
           mb-3
         "
@@ -143,7 +123,6 @@
           >
           <div
             class="
-              value
               text-green-500
               font-black
               text-5xl
@@ -154,13 +133,7 @@
             {{ formatNumber(this.globalRate.TotalRecovered) }}
           </div>
           <div
-            class="
-              value-2
-              text-green-500
-              font-semibold
-              text-xl
-              group-hover:text-white
-            "
+            class="text-green-500 font-semibold text-xl group-hover:text-white"
             v-if="this.globalRate.newRecovered > 0"
           >
             <span>+</span>

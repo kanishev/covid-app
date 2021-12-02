@@ -31,8 +31,8 @@
           placeholder="Фильтр по странам..."
         />
       </div>
-      <div class="table__wrapper overflow-auto max-h-96">
-        <div class="p-3" v-show="false">
+      <div class="overflow-auto max-h-96">
+        <div class="p-3" v-show="countries.length == 0">
           <p class="text-lg">
             Страны по заданным параметрам поиска не обнаружено
           </p>
