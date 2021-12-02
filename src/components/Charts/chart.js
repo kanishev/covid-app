@@ -10,13 +10,16 @@ export default {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        animation: {
-          duration: 0,
-        },
+
         hover: {
           animationDuration: 0,
         },
         responsiveAnimationDuration: 0,
+        elements: {
+          point: {
+            radius: 1,
+          },
+        },
       },
     };
   },

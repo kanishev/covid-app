@@ -7,15 +7,18 @@
         rounded-b-2xl
         p-3
         flex
-        justify-between
+        justify-center
+        text-center
         items-center
+        flex-wrap
+        xsm:text-justify xsm:justify-between
       "
     >
       <div class="logo flex items-center">
         <img
           v-if="!this.selectedCountry"
-          class="w-16"
-          src="../assets/covid.png"
+          class="w-16 xsm:block hidden"
+          src="../assets/icons/covid.png"
           alt="covid"
           height="fit-content"
         />
@@ -25,12 +28,12 @@
           alt=""
         />
         <div class="m-auto pl-4">
-          <h1 class="text-2xl font-medium">
+          <h1 class="text-4xl font-medium xsm:text-2xl">
             {{
               this.selectedCountry ? this.selectedCountry.Country : "Covid-19"
             }}
           </h1>
-          <p>
+          <p class="mb-2 xsm:mb-0">
             По состоянию на:
             <span class="date text-base font-medium">{{
               new Date().toLocaleDateString()

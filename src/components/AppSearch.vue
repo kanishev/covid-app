@@ -2,7 +2,7 @@
   <div class="relative">
     <input
       type="text"
-      class="bg-purple-white shadow-inner rounded border-0 p-3"
+      class="bg-purple-white shadow rounded border-0 p-3"
       :placeholder="
         this.selectedCountry ? selectedCountry.Country : 'Поиск по странам...'
       "
@@ -52,19 +52,19 @@ export default {
     return {
       value: "",
       isListVisible: false,
-      selectedCountry: null,
     };
   },
   computed: {
+    selectedCountry() {
+      return this.$store.state.selectedCountry;
+    },
     countryList() {
       if (this.value == "" || this.countries.length == 0) {
         return [];
       }
-      let list = this.countries.filter((country) => {
+      return this.countries.filter((country) => {
         return country.Country.toLowerCase().includes(this.value.toLowerCase());
       });
-
-      return list;
     },
   },
   methods: {
@@ -74,8 +74,7 @@ export default {
       });
 
       if (country) {
-        this.selectedCountry = country;
-        this.$store.commit("setSelectedCountry", this.selectedCountry);
+        this.$store.commit("setSelectedCountry", country);
         this.$store.dispatch("fetchCountryData");
         this.value = "";
       }

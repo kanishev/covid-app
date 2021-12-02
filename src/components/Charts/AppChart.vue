@@ -1,5 +1,8 @@
 <template>
   <div class="container mx-auto my-10" v-if="this.selectedCountry">
+    <div class="cursor-pointer" @click="closeChart">
+      <close-icon></close-icon>
+    </div>
     <line-chart :chartData="linedata[0]"></line-chart>
     <line-chart :chartData="linedata[1]"></line-chart>
     <line-chart :chartData="linedata[2]"></line-chart>
@@ -8,6 +11,7 @@
 
 <script>
 import LineChart from "./chart";
+import CloseIcon from "../../assets/icons/close.svg";
 
 export default {
   data() {
@@ -42,17 +46,16 @@ export default {
         label: "Летальные исходы",
         borderColor: "red",
         pointBackgroundColor: "white",
-        pointBorderColor: "white",
-        borderWidth: 2,
+        borderWidth: 3,
         backgroundColor: "transparent",
         data: this.countryRate.deaths,
       };
       const confirmed = {
         label: "Выявлено",
         borderColor: "#05CBE1",
-        pointBackgroundColor: "white",
-        pointBorderColor: "white",
-        borderWidth: 2,
+        pointBackgroundColor: "#05CBE1",
+        pointBorderColor: "#05CBE1",
+        borderWidth: 3,
         backgroundColor: "transparent",
         data: this.countryRate.confirmed,
       };
@@ -60,8 +63,8 @@ export default {
         label: "Вылечилось",
         borderColor: "green",
         pointBackgroundColor: "white",
-        pointBorderColor: "white",
-        borderWidth: 2,
+        pointBorderColor: "green",
+        borderWidth: 3,
         backgroundColor: "transparent",
         data: this.countryRate.recovered,
       };
@@ -81,14 +84,20 @@ export default {
         },
       ];
     },
+    closeChart() {
+      this.$store.commit("closeChart");
+    },
   },
   watch: {
-    countryRate() {
-      this.setData();
+    countryRate(data) {
+      if (Object.keys(data).length !== 0) {
+        this.setData();
+      }
     },
   },
   components: {
     LineChart,
+    CloseIcon,
   },
 };
 </script>

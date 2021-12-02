@@ -25,6 +25,10 @@ export default new Vuex.Store({
     setCountriesSummary(state, countries) {
       state.countriesSummary = countries;
     },
+    closeChart(state) {
+      state.selectedCountry = null;
+      state.countryRate = {};
+    },
     setCountryData(state, data) {
       console.log(data);
       const rate = {
@@ -34,16 +38,30 @@ export default new Vuex.Store({
         recovered: [],
       };
 
-      data.forEach((d) => {
-        if (d.Confirmed > 0 && d.Deaths > 0) {
-          rate.confirmed.push(d.Confirmed);
-          rate.deaths.push(d.Deaths);
-          rate.recovered.push(d.Recovered);
-          rate.dates.push(d.Date);
+      for (let i = 1; i < data.length; i++) {
+        if (
+          data[i].Confirmed == 0 ||
+          data[i].Deaths == 0 ||
+          data[i].Recovered == 0
+        ) {
+          continue;
         }
-      });
+
+        if (data[i].Confirmed - data[i - 1].Confirmed !== 0) {
+          rate.confirmed.push(
+            Math.abs(data[i].Confirmed - data[i - 1].Confirmed)
+          );
+        }
+
+        if (rate.deaths.push(data[i].Deaths - data[i - 1].Deaths) !== 0) {
+          rate.deaths.push(Math.abs(data[i].Deaths - data[i - 1].Deaths));
+        }
+        rate.recovered.push(data[i].Recovered - data[i - 1].Recovered);
+        rate.dates.push(data[i].date);
+      }
 
       state.countryRate = rate;
+      console.log(state.countryRate);
     },
   },
   actions: {
@@ -68,13 +86,13 @@ export default new Vuex.Store({
       country = country.split(" ").join("-");
 
       const { data } = await axios.get(
-        `https://api.covid19api.com/country/${country}?from=2021-01-01T00:00:00Z&to=2021-01-11T00:00:00Z`
+        `https://api.covid19api.com/country/${country}?from=2021-06-01T00:00:00Z&to=2021-12-01T00:00:00Z`
       );
 
-      console.log(data);
       const result = data.map((i) => {
-        const { Deaths, Confirmed, Date, Recovered } = i;
-        return { Deaths, Confirmed, Date, Recovered };
+        const { Deaths, Confirmed, Recovered } = i;
+        const date = i.Date.split("T")[0];
+        return { Deaths, Confirmed, date, Recovered };
       });
 
       commit("setCountryData", result);
