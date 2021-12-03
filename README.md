@@ -1,35 +1,26 @@
-# 📝 Simple PHP Material To Do List 📝
+# 🦠 Covid-19 Global Statistics App 🦠
 
-![Material To Do List Demo](/src/assets/icons/covid.png)
+![Material To Do List Demo](/src/assets/cover.gif)
 
 ## Project Information
 
-Simple PHP Material To Do List that uses AJAX, PHP Object Oriented
+This app provide you an ability to observe the actual covid-19 world state.
+You can observe the global rates for the last 6 months of the current year or choose the particular country and watch its separate covid-19 data dynamically.
 
-Contains a login system for each user to have different To Do Items
+### API
 
-Database Relationship: A User can have many to do items but a todo item can only have one user
-
-Mini project was done in order to explore another approach and put practice in TDD as well as try out new technologies such as Slim Framework
-
-### Development Practices
-
-Makes use of TDD (Test Driven Development) and Travis CI for practicing continuous integration
+🌍 The application retrieves data from [covid19api.com](https://covid19api.com)
+⚡ Easy and beautiful charts with Chart.js and Vue.js [vue-charts](https://vue-chartjs.org/)
 
 ### Technologies Used
 
-| Technology   | Description                                                                                          | Link ↘️                     |
-| ------------ | ---------------------------------------------------------------------------------------------------- | --------------------------- |
-| HTML5        | Hyper Text Markup Language                                                                           | ----                        |
-| CSS3         | Cascading Style Sheets                                                                               | ----                        |
-| JavaScript   | High Level, Dynamic, Interpreted Language                                                            | ----                        |
-| PHP          | General Purpose Scripting Language                                                                   | http://php.net/             |
-| Twig         | PHP Templating Engine                                                                                | https://twig.symfony.com/   |
-| SASS         | Syntactically Awesome Style Sheets                                                                   | https://sass-lang.com/      |
-| Babel        | Javascript Compiler/Transpiler                                                                       | https://babeljs.io/         |
-| Webpack      | Javascript Module Bundler                                                                            | https://webpack.js.org/     |
-| Browser Sync | Synchronised Browser Testing                                                                         | https://www.browsersync.io/ |
-| Travis CI    | distributed continuous integration service used to build and test software projects hosted at GitHub | https://travis-ci.org/      |
+| Technology  | Description                                                  | Link 🌐                      |
+| ----------- | ------------------------------------------------------------ | ---------------------------- |
+| VueJS       | The Progressive JavaScript Framework                         | https://vuejs.org/index.html |
+| VueCLI      | Standard Tooling for Vue.js Development                      | https://cli.vuejs.org/       |
+| JavaScript  | High Level, Dynamic, Interpreted Language                    | ----                         |
+| TailwindCSS | Rapidly build modern websites without ever leaving your HTML | https://tailwindcss.com      |
+| Babel       | Javascript Compiler/Transpiler                               | https://babeljs.io/          |
 
 ## Project setup
 
