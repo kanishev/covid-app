@@ -102,6 +102,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -109,13 +110,12 @@ export default {
     };
   },
   computed: {
+    ...mapState(["countriesSummary"]),
     countries() {
-      const countries = this.$store.state.countriesSummary;
-
       if (this.country == "") {
-        return countries;
+        return this.countriesSummary;
       }
-      return countries.filter((c) => {
+      return this.countriesSummary.filter((c) => {
         return c.Country.toLowerCase().match(this.country.toLowerCase());
       });
     },

@@ -46,6 +46,7 @@
 
 <script>
 import SearchIcon from "../assets/icons/search.svg";
+import { mapState } from "vuex";
 export default {
   props: ["countries"],
   data() {
@@ -55,9 +56,7 @@ export default {
     };
   },
   computed: {
-    selectedCountry() {
-      return this.$store.state.selectedCountry;
-    },
+    ...mapState(["selectedCountry"]),
     countryList() {
       if (this.value == "" || this.countries.length == 0) {
         return [];
@@ -68,7 +67,11 @@ export default {
     },
   },
   methods: {
-    selectCountry() {
+    selectCountry(value) {
+      if (typeof value == "string") {
+        this.value = value;
+      }
+
       let country = this.countryList.find((c) => {
         return c.Country.toLowerCase().includes(this.value.toLowerCase());
       });

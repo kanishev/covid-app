@@ -3,15 +3,16 @@
     <div class="cursor-pointer" @click="closeChart">
       <close-icon></close-icon>
     </div>
-    <line-chart :chartData="linedata[0]"></line-chart>
-    <line-chart :chartData="linedata[1]"></line-chart>
-    <line-chart :chartData="linedata[2]"></line-chart>
+    <line-chart class="mb-5" :chartData="linedata[0]"></line-chart>
+    <line-chart class="mb-5" :chartData="linedata[1]"></line-chart>
+    <line-chart class="mb-5" :chartData="linedata[2]"></line-chart>
   </div>
 </template>
 
 <script>
 import LineChart from "./chart";
 import CloseIcon from "../../assets/icons/close.svg";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -32,14 +33,7 @@ export default {
       ],
     };
   },
-  computed: {
-    selectedCountry() {
-      return this.$store.state.selectedCountry;
-    },
-    countryRate() {
-      return this.$store.state.countryRate;
-    },
-  },
+  computed: mapState(["selectedCountry", "countryRate"]),
   methods: {
     setData() {
       const deaths = {
@@ -72,12 +66,13 @@ export default {
       this.linedata = [
         {
           labels: [...this.countryRate.dates],
-          datasets: [deaths],
+          datasets: [confirmed],
         },
         {
           labels: [...this.countryRate.dates],
-          datasets: [confirmed],
+          datasets: [deaths],
         },
+
         {
           labels: [...this.countryRate.dates],
           datasets: [recovered],

@@ -147,18 +147,13 @@
 
 <script>
 import Loader from "./AppLoader.vue";
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {};
   },
-  computed: {
-    selectedCountry() {
-      return this.$store.state.selectedCountry;
-    },
-    globalRate() {
-      return this.$store.state.globalRate;
-    },
-  },
+  computed: mapState(["selectedCountry", "globalRate"]),
   methods: {
     formatNumber(value) {
       return new Intl.NumberFormat({

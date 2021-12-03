@@ -13,24 +13,23 @@ export default new Vuex.Store({
     countryRate: {},
   },
   mutations: {
-    setGlobalRate(state, value) {
-      state.globalRate = value;
+    setGlobalRate(state, payload) {
+      state.globalRate = payload;
     },
-    setCountries(state, value) {
-      state.countries = value;
+    setCountries(state, payload) {
+      state.countries = payload;
     },
-    setSelectedCountry(state, country) {
-      state.selectedCountry = country;
+    setSelectedCountry(state, payload) {
+      state.selectedCountry = payload;
     },
-    setCountriesSummary(state, countries) {
-      state.countriesSummary = countries;
+    setCountriesSummary(state, payload) {
+      state.countriesSummary = payload;
     },
     closeChart(state) {
       state.selectedCountry = null;
       state.countryRate = {};
     },
-    setCountryData(state, data) {
-      console.log(data);
+    setCountryData(state, payload) {
       const rate = {
         confirmed: [],
         deaths: [],
@@ -38,30 +37,24 @@ export default new Vuex.Store({
         recovered: [],
       };
 
-      for (let i = 1; i < data.length; i++) {
+      for (let i = 1; i < payload.length; i++) {
         if (
-          data[i].Confirmed == 0 ||
-          data[i].Deaths == 0 ||
-          data[i].Recovered == 0
+          payload[i].Confirmed == 0 ||
+          payload[i].Deaths == 0 ||
+          payload[i].Recovered == 0
         ) {
           continue;
         }
 
-        if (data[i].Confirmed - data[i - 1].Confirmed !== 0) {
-          rate.confirmed.push(
-            Math.abs(data[i].Confirmed - data[i - 1].Confirmed)
-          );
+        if (payload[i].Confirmed - payload[i - 1].Confirmed > 0) {
+          rate.confirmed.push(payload[i].Confirmed - payload[i - 1].Confirmed);
         }
-
-        if (rate.deaths.push(data[i].Deaths - data[i - 1].Deaths) !== 0) {
-          rate.deaths.push(Math.abs(data[i].Deaths - data[i - 1].Deaths));
-        }
-        rate.recovered.push(data[i].Recovered - data[i - 1].Recovered);
-        rate.dates.push(data[i].date);
+        rate.deaths.push(payload[i].Deaths - payload[i - 1].Deaths);
+        rate.recovered.push(payload[i].Recovered - payload[i - 1].Recovered);
+        rate.dates.push(payload[i].date);
       }
 
       state.countryRate = rate;
-      console.log(state.countryRate);
     },
   },
   actions: {
@@ -82,7 +75,6 @@ export default new Vuex.Store({
     },
     async fetchCountryData({ state, commit }) {
       let country = state.selectedCountry.Country;
-
       country = country.split(" ").join("-");
 
       const { data } = await axios.get(
@@ -98,5 +90,4 @@ export default new Vuex.Store({
       commit("setCountryData", result);
     },
   },
-  modules: {},
 });

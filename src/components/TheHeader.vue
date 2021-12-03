@@ -49,17 +49,11 @@
 
 <script>
 import AppSearch from "./AppSearch.vue";
+import { mapState } from "vuex";
+
 export default {
   components: { AppSearch },
-  computed: {
-    selectedCountry() {
-      console.log(this.$store.state.selectedCountry);
-      return this.$store.state.selectedCountry;
-    },
-    countries() {
-      return this.$store.state.countries;
-    },
-  },
+  computed: mapState(["selectedCountry", "countries"]),
 };
 </script>
 
